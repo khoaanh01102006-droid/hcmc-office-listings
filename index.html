@@ -41,7 +41,7 @@
     ev.preventDefault(); bao.textContent = ''; nut.disabled = true; nut.textContent = 'Đang mở...';
     try {
       var tt = await (await fetch('./khoa.json', { cache: 'no-cache' })).json();
-      var goc = await crypto.subtle.importKey('raw', new TextEncoder().encode(document.getElementById('khoa-mat-khau').value.trim()),
+      var goc = await crypto.subtle.importKey('raw', new TextEncoder().encode(document.getElementById('khoa-mat-khau').value.toLowerCase().replace(/[^a-z0-9]/g, '')),
         'PBKDF2', false, ['deriveKey']);
       var khoa = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(tt.muoi), iterations: tt.vong, hash: 'SHA-256' }, goc,
         { name: 'AES-GCM', length: 256 }, true, ['decrypt']);
